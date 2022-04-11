@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <TextView
+        android:id="@+id/name_text"
+        android:text="@string/name"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+    <EditText
+        android:id="@+id/nickname_edit"
+        android:hint="@string/what_is_your_nickname"
+        android:autofillHints="name"
+        android:text=""
+        android:inputType="textPersonName"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/done_button"
+        android:text="@string/done"
+        android:layout_gravity="center_horizontal"
+        android:onClick="clickHandlerFunction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/nickname_text"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:text=""
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/star_image"
+        android:contentDescription="@string/yellow_star"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:id="@+id/bio_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/bio_text"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+</LinearLayout>
+
+-------------------------------------------------------------------------
+
+
+<resources>
+    <string name="app_name">About Me</string>
+    <string name="bio">Hi, my name is Aleks.
+    \n\nI love fish.
+    \n\nThe kind that is alive and swims around in an aquarium or river, or a lake, and definitely the ocean.
+    \n\nFun fact is that I have several aquariums and also a river.
+    \n\nI like eating fish, too. Raw fish. Grilled fish. Smoked fish. Poached fish - not so much.
+    \nAnd sometimes I even go fishing.
+    \n\nOnce, when I was camping in Canada, and very hungry, I even caught a large salmon with my hands.
+    \n\nI'll be happy to teach you how to make your own aquarium.
+    \nYou should ask someone else about fishing, though.\n\n
+    </string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+    <string name="yellow_star">Yellow Star</string>
+    <string name="name">Aleks Haecky</string>
+
+</resources>
+
+-----------------------------------------------------------------------
+
+package com.example.aboutme
+
+import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        findViewById<Button>(R.id.done_button).setOnClickListener{
+            addNickname(it)
+        }
+    }
+    private fun addNickname(view: View){
+        val editText = findViewById<EditText>(R.id.nickname_edit)
+        val nicknameTextView = findViewById<TextView>(R.id.nickname_text)
+
+        nicknameTextView.text = editText.text
+        editText.visibility = View.GONE
+        view.visibility = View.GONE
+        nicknameTextView.visibility = View.VISIBLE
+
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}
